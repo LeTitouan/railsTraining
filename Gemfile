@@ -66,6 +66,7 @@ end
 gem 'devise'
 
 group :test do
+  gem "faker", git: "https://github.com/stympy/faker.git", branch: "master"
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
 end
@@ -73,3 +74,4 @@ end
 gem 'bootstrap', '~> 4.3.1'
 
 gem 'rubocop', '~> 0.68.1', require: false
+
