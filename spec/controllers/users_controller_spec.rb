@@ -1,42 +1,20 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe UsersController, type: :controller do
+  describe "GET #index" do
+    context "when request is valid " do
+      let!(:users) { create_list(:user, 3) }
 
-    describe "GET #index" do
-      context "when request is valid " do
-        let!(:users) {create_list(:user, 3)}
+      before { get :index, format: :json }
 
-        before {get :index, format: :json}
-
-        it "returns status code ok" do
-          expect(response).to have_http_status(200)
-        end
-
-        it "validate @user" do
-          expect(assigns(:users)).to match_array(users)
-        end
-      end
-    end
-
- describe "POST #create" do
-    context "when it does validation" do
-
-      it "has invalid user" do
-        invalid_user = User.new(username: "Kruzy222222222#############@@@@@@@@@@@@@@@@@%%%%%%%%%^^^^^^^^^^^^^^^^^^^^",
-          email: nil,
-          password: nil,
-          password_confirmation: nil
-        )
-        expect(invalid_user.validate).to be_falsy
+      it "returns status code ok" do
+        expect(response).to have_http_status(:ok)
       end
 
-      it "has valid user" do
-        valid_user = User.new(username: "Kruzy",
-          email: "moi@mail.com",
-          password: "pass",
-          password_confirmation: "pass"
-        )
-        expect(valid_user.validate).to be_truthy
+      it "validate @user" do
+        expect(assigns(:users)).to match_array(users)
       end
     end
   end
@@ -54,10 +32,10 @@ RSpec.describe UsersController, type: :controller do
         }
       end
 
-      before {put :update, params: new_attributes}
+      before { put :update, params: new_attributes }
 
       it "returns status code ok" do
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(:no_content)
       end
 
       it "validate @user" do
@@ -80,10 +58,10 @@ RSpec.describe UsersController, type: :controller do
         }
       end
 
-      before { post :update, params: nil_attributes}
+      before { post :update, params: nil_attributes }
 
       it "returns status code unprocessable_entity" do
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(:no_content)
       end
     end
   end

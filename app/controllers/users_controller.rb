@@ -1,16 +1,23 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
 
   def index
-   render json: @users = User.all
+    @users = User.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @users }
+    end
   end
 
   def show
-   render json: @user = User.find(params[:id])
-  end
+    @user = User.find(params[:id])
 
-  def create
-    @user = User.new(user_params)
-    render html: @user.save
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
   end
 
   def update
