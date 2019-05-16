@@ -2,6 +2,8 @@
 
 class UsersController < ApplicationController
 
+  def home; end
+
   def index
     @users = User.all
 
@@ -23,6 +25,20 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
   end
 
   def user_params

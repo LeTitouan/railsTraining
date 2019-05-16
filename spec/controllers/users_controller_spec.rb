@@ -19,6 +19,29 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "GET #show" do
+
+    context "when request is valid" do
+      let(:user) { create(:user) }
+      let(:params) do
+        {
+          id: user.id,
+        }
+      end
+
+      before { get :show, params: params, format: :json }
+
+      it "returns an specific user" do
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response["id"].to_i).to eq(user.id)
+      end
+
+      it "validate @user" do
+        expect(assigns(:user)).to match(user)
+      end
+    end
+  end
+
   describe "POST #update" do
     let!(:user) { create(:user) }
 
@@ -35,7 +58,7 @@ RSpec.describe UsersController, type: :controller do
       before { put :update, params: new_attributes }
 
       it "returns status code ok" do
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:ok)
       end
 
       it "validate @user" do
@@ -61,7 +84,30 @@ RSpec.describe UsersController, type: :controller do
       before { post :update, params: nil_attributes }
 
       it "returns status code unprocessable_entity" do
-        expect(response).to have_http_status(:no_content)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
+  describe "GET #edit" do
+
+    context "when request is valid" do
+      let(:user) { create(:user) }
+      let(:params) do
+        {
+          id: user.id,
+        }
+      end
+
+      before { get :edit, params: params, format: :json }
+
+      it "returns an specific user" do
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response["id"].to_i).to eq(user.id)
+      end
+
+      it "validate @user" do
+        expect(assigns(:user)).to match(user)
       end
     end
   end
