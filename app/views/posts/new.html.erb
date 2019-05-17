@@ -1,0 +1,28 @@
+<h4>New Post</h4>
+
+<%= form_for @post do |f| %>
+
+  <div class="form-group">
+    <label>Title</label>
+    <%= f.text_field :title, class: "form-control" %>
+    <label>Content</label>
+    <%= f.text_field :content, class: "form-control" %>
+    <label>ID User</label>
+    <%= f.text_field :user_id, class: "form-control" %>
+    <% @post.user = user_session %>
+  </div>
+  <div class="form-group">
+    <button type="submit", class="btn btn-primary">comfirm changes</button>
+  </div>
+
+<br/>
+<br/>
+
+<% @users.each do |user| %>
+  <h4>ID <%= user.username %> : <%= user.id %></h4>
+<%end%>
+
+
+
+<% end %>
+

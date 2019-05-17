@@ -2,6 +2,8 @@
 
 class User < ApplicationRecord
 
+  has_many :posts, dependent: :restrict_with_exception
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :trackable,

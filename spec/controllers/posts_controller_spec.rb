@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe PostsController, type: :controller do
   describe "GET #index" do
     context "when request is valid " do
-      let!(:users) { create_list(:user, 3) }
+      let!(:posts) { create_list(:post, 3) }
 
       before { get :index, format: :json }
 
@@ -13,8 +13,8 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
-      it "validate @user" do
-        expect(assigns(:users)).to match_array(users)
+      it "validate @post" do
+        expect(assigns(:posts)).to match_array(posts)
       end
     end
   end
@@ -22,35 +22,35 @@ RSpec.describe UsersController, type: :controller do
   describe "GET #show" do
 
     context "when request is valid" do
-      let(:user) { create(:user) }
+      let(:post) { create(:post) }
       let(:params) do
         {
-          id: user.id,
+          id: post.id,
         }
       end
 
       before { get :show, params: params, format: :json }
 
-      it "returns an specific user" do
+      it "returns an specific post" do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response["id"].to_i).to eq(user.id)
+        expect(parsed_response["id"].to_i).to eq(post.id)
       end
 
-      it "validate @user" do
-        expect(assigns(:user)).to match(user)
+      it "validate @post" do
+        expect(assigns(:post)).to match(post)
       end
     end
   end
 
   describe "POST #update" do
-    let!(:user) { create(:user) }
+    let!(:post) { create(:post) }
 
     context "when the request is valid" do
       let(:new_attributes) do
         {
-          id: user.id,
-          user: {
-            username: "Kruzy Dwayne Johnson",
+          id: post.id,
+          post: {
+            content: "New content",
           },
         }
       end
@@ -61,27 +61,27 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to have_http_status(:found)
       end
 
-      it "validate @user" do
-        expect(assigns(:user)).to match(user)
+      it "validate @post" do
+        expect(assigns(:post)).to match(post)
       end
 
-      it "changes the user with the new values" do
-        user.reload
-        expect(user.username).to eq(new_attributes[:user][:username])
+      it "changes the post with the new values" do
+        post.reload
+        expect(post.content).to eq(new_attributes[:post][:content])
       end
     end
 
     context "when the request is invalid" do
       let(:nil_attributes) do
         {
-          id: user.id,
-          user: {
-            username: nil,
+          id: post.id,
+          post: {
+            content: nil,
           },
         }
       end
 
-      before { post :update, params: nil_attributes }
+      before { put :update, params: nil_attributes }
 
       it "returns status code unprocessable_entity" do
         expect(response).to have_http_status(:ok)
@@ -92,22 +92,22 @@ RSpec.describe UsersController, type: :controller do
   describe "GET #edit" do
 
     context "when request is valid" do
-      let(:user) { create(:user) }
+      let(:post) { create(:post) }
       let(:params) do
         {
-          id: user.id,
+          id: post.id,
         }
       end
 
       before { get :edit, params: params, format: :json }
 
-      it "returns an specific user" do
+      it "returns an specific post" do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response["id"].to_i).to eq(user.id)
+        expect(parsed_response["id"].to_i).to eq(post.id)
       end
 
-      it "validate @user" do
-        expect(assigns(:user)).to match(user)
+      it "validate @post" do
+        expect(assigns(:post)).to match(post)
       end
     end
   end
