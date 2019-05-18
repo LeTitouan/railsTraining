@@ -1,0 +1,26 @@
+<h4>New Comment</h4>
+
+<%= form_for @comment do |f| %>
+
+  <div class="form-group">
+    <label>Message</label>
+    <%= f.text_field :message, class: "form-control" %>
+
+    <label>ID User</label>
+    <%= f.text_field :user_id, class: "form-control" %>
+    <% @comment.user = user_session %>
+  </div>
+  <div class="form-group">
+    <button type="submit", class="btn btn-primary">comfirm changes</button>
+  </div>
+
+<br/>
+<br/>
+
+<% @users.each do |user| %>
+  <h4>ID <%= user.username %> : <%= user.id %></h4>
+<%end%>
+
+
+
+<% end %>

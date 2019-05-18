@@ -58,7 +58,7 @@ RSpec.describe UsersController, type: :controller do
       before { put :update, params: new_attributes }
 
       it "returns status code ok" do
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:found)
       end
 
       it "validate @user" do

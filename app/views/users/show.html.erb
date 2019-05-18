@@ -3,3 +3,19 @@
 
 <a href="<%= edit_user_path(@user.id) %>" class="btn btn-primary">edit</a>
 <a href="/users" class="btn btn-primary">back</a>
+
+<br/>
+<br/>
+
+<h4>Comments</h4>
+<% @user.comments.each do |comment| %>
+  <%= comment.message %>
+  <a href="<%= comment_path(comment.id) %>" class="btn btn-danger" data-confirm="Are ou sure?" data-method="DELETE">delete</a>
+  <br/>
+  <br/>
+<% end %>
+
+<br/>
+<br/>
+
+<a href="<%= new_comment_path %>" class="btn btn-success">new comment</a>
