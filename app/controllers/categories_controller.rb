@@ -2,18 +2,30 @@
 
 class CategoriesController < ApplicationController
 
-  def index; end
+  def index
+    @categories = Categorie.all
 
-  def show; end
+    respond_to do |format|
+      format.html
+      format.json { render json: @categories }
+    end
+  end
 
-  def new; end
+  def show
+    @categorie = Categorie.find(params[:id])
 
-  def create; end
+    respond_to do |format|
+      format.html
+      format.json { render json: @categorie }
+    end
+  end
 
-  def edit; end
+  private
 
-  def update; end
-
-  def destroy; end
+  def post_params
+    params.require(:categorie).permit(
+      :name,
+    )
+  end
 
 end
