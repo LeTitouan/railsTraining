@@ -2,6 +2,8 @@
 
 class PostsController < ApplicationController
 
+  before_action :set_post, only: %i[show edit update destroy]
+
   def index
     @posts = Post.includes(:user).all
 
@@ -12,8 +14,6 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @post }
@@ -27,7 +27,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.save
 
     respond_to do |format|
       if @post.save(post_params)
@@ -41,7 +40,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
     @post.update(post_params)
 
     respond_to do |format|
@@ -56,8 +54,6 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @post }
@@ -65,13 +61,16 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
 
     redirect_to posts_path
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(

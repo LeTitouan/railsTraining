@@ -7,9 +7,8 @@
   <h3><%= post.title %></h3>
   <h4><%= post.content %></h4>
 
-  <% if post.user.username %>
-    <h4>User: <%= post.user.username %></h4>
-  <% end %>
+ <h4>User: <%= post.user.try(:username) %></h4>
+
   <a href="<%= post_path(post.id) %>" class="btn btn-primary">details</a>
   <a href="<%= post_path(post.id) %>" class="btn btn-danger" data-confirm="Are you sure?" data-method="DELETE">delete</a>
 
