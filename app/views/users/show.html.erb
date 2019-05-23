@@ -4,4 +4,31 @@
 <a href="<%= edit_user_path(@user.id) %>" class="btn btn-primary">edit</a>
 <a href="/users" class="btn btn-primary">back</a>
 
-<a href="<%= new_post_path %>" class="btn btn-success">New post</a>
+<br>
+<br>
+
+<h4>User's posts :</h4>
+
+<br>
+  <p>
+  <% @user.posts.each do |post| %>
+    <h5><%= post.title %></h5>
+    <h6> <%= post.content %></h6>
+    <a href="<%= post_path(post.id) %>"
+      class="btn btn-danger"
+      data-confirm="Are you sure?"
+      data-method="DELETE"
+    >
+      delete
+    </a>
+    <a href="<%= edit_post_path(post.id) %>"
+      class="btn btn-primary"
+    >
+      edit
+    </a>
+
+    <br>
+    <br>
+  <%end %>
+
+</p>

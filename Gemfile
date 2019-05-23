@@ -36,6 +36,7 @@ end
 
 group :development, :test do
   gem "factory_bot_rails"
+  gem "guard-rspec", require: false
   gem "rubocop-rspec"
 end
 
