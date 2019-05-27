@@ -3,8 +3,13 @@
 require "rails_helper"
 
 RSpec.describe PostsController, type: :controller do
+  let!(:post) { create(:post) }
+
+  before do
+    sign_in post.user
+  end
+
   describe "PUT #update" do
-    let!(:post) { create(:post) }
 
     context "when the request is valid" do
       let(:new_attributes) do
@@ -16,9 +21,10 @@ RSpec.describe PostsController, type: :controller do
         }
       end
 
-      before { put :update, params: new_attributes}
+      before { put :update, params: new_attributes }
 
       it "returns status code ok" do
+        p response.body
         expect(response).to have_http_status(:found)
       end
 
@@ -45,7 +51,7 @@ RSpec.describe PostsController, type: :controller do
       before { put :update, params: nil_attributes }
 
       it "returns status code unprocessable_entity" do
-        expect(response).to have_http_status(:found)
+        expect(response).to have_http_status(:ok)
       end
     end
   end
@@ -53,7 +59,6 @@ RSpec.describe PostsController, type: :controller do
   describe "GET #edit" do
 
     context "when request is valid" do
-      let(:post) { create(:post) }
       let(:params) do
         {
           id: post.id,
